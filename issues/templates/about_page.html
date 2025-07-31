@@ -1,0 +1,124 @@
+{% extends 'base.html'%} 
+{% load staticfiles %} 
+{% block content %}
+<div class="well">
+<div class="media">
+  <div class="media-left media-middle">
+      <img class="media-object hidden-xs" src="{% static 'images/aboutImage1.jpg' %}" alt="About Image" style="height:150px;width:150px;">
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">Unicorn Software</h4>
+    <p>
+    Software is everywhere today. It leads every our step. It is a part of everything we do.
+    The software makes our everyday work easier and simplifies our daily lives. We use software to work, study, communicate with friends. 
+    It allows us to shop, make payments, travel and do a lot more.
+    Software is essential for all areas of business. It is used in banks and insurance companies, in energy, in manufacturing and trade, 
+    at hospitals, offices, in agriculture and a number of other disciplines.
+    Software runs on our mobile phones, tablets, computers, cars, TVs, refrigerators, watches. It is a part of manufacturing machinery, vehicles, 
+    security systems and many other devices.
+
+    We are factory for software. Software is what Unicorn and our co-workers are mainly engaged in. We use software to produce software and to 
+    manage everything that we do. We successfully implement software projects across Europe and we have the ambition for our software to be used worldwide.
+    </p>
+  </div>
+</div>
+</div>
+
+<div class="well">
+<div class="media">
+  <div class="media-body">
+    <h4 class="media-heading">Utilities Software</h4>
+    <p>
+    We have been present on the European energy market for more than 15 years. During this time, we have successfully completed dozens of extensive 
+    projects for transmission and distribution systems operators, traders, power and gas suppliers, or gas storage systems operators. As a result, 
+    we have gained a unique know-how and built a firm technological background for our energy industry team consisting of more than 250 experts. 
+    We are ready to offer all our customers reliable solutions with high added value.
+
+    Thanks to our flexibility and our ability to deliver an appropriate solution every time, we are trusted by dozens of important European energy 
+    companies as their long-term IT partner. We participate significantly in the process of European energy market transformation. Our solutions 
+    ensure the reliable operation of integrated European energy networks on their way to the permanently sustainable energy industry. We help the 
+    common European market to operate efficiently and enable our customers to get the maximum profit from their infrastructure and investments, 
+    while observing all safety and reliability requirements.    
+    </p>
+  </div>
+  <div class="media-right media-middle">
+      <img class="media-object hidden-xs" src="{% static 'images/aboutImage3.jpg' %}" alt="About Image" style="height:150px;width:150px;">
+  </div>
+</div>
+</div>
+
+<div class="well">
+<div class="media">
+  <div class="media-left media-middle">
+      <img class="media-object hidden-xs" src="{% static 'images/aboutImage4.jpg' %}" alt="About Image" style="height:150px;width:150px;">
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">Manufacturing Software</h4>
+    <p>
+    We have been providing IT solutions for manufacturing companies for more than 10 years. We are focused to systems that enable our customers 
+    to efficiently manage production, cooperation with suppliers, and internal communication. We provide solutions for modern logistics, finance 
+    and comprehensive support of B2B and B2C trading. We are continuously monitoring and applying new trends. We actively participate in Industry 4.0 
+    and the Internet of Things initiatives.
+
+    Our teams of experts are thoroughly familiar with processes in manufacturing companies and have extensive experience with IT solutions and their 
+    intergration into the manufacturing environment. Our customers benefit from IT solutions with an exceptional price to performance ratio. We proceed 
+    in compliance with the customer’s standards and with globally proven methodologies and certified standards. Our customers’ satisfaction is affirmed 
+    by many references from a large number of manufacturing companies.
+    </p>
+  </div>
+</div>
+</div>
+<!--
+Author: Bootstrapmd.com (2019).
+Title: "Modal Form Bootstrap Modal Form".
+Version: Unknown.
+Type: Bootstrap.
+Retrieved from: https://mdbootstrap.com/docs/jquery/modals/forms/
+-->
+<div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Contact Us</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <i class="fa fa-user prefix grey-text"></i>
+          <input type="text" id="form34" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="form34">Your name</label>
+        </div>
+
+        <div class="md-form mb-5">
+          <i class="fa fa-envelope prefix grey-text"></i>
+          <input type="email" id="form29" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="form29">Your email</label>
+        </div>
+
+        <div class="md-form mb-5">
+          <i class="fa fa-tag prefix grey-text"></i>
+          <input type="text" id="form32" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="form32">Subject</label>
+        </div>
+
+        <div class="md-form">
+          <i class="fa fa-pencil prefix grey-text"></i>
+          <textarea type="text" id="form8" class="md-textarea form-control" rows="4"></textarea>
+          <label data-error="wrong" data-success="right">Your message</label>
+        </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button class="btn btn-unique">Send <i class="fa fa-paper-plane-o ml-1"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="well well-sm active-margin text-center">
+    <a href="" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalContactForm">Contact Us</a>
+</div>
+{% endblock %}

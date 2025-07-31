@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% load bootstrap_tags %} {% block content %}
+<div class="panel panel-primary active-margin">
+<div class="panel-heading"><strong>Edit an Issue</strong></div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %} {{ edit_issue_form | as_bootstrap }}
+        <span class="input-group-btn">
+                <button class="btn btn-success" type="submit" onclick="return confirm('Are you sure you want to edit this issue?')"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Make Changes</button>
+        </span>
+    </form>
+</div>
+<!--
+data-toggle="modal" data-target=".bs-example-modal-sm"
+<div id="editModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Issue</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you wish to edit the <strong>{{ issue.issue_name }}</strong> issue?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" >Make Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+{% endblock %}

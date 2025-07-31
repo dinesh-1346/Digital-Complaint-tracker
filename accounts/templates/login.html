@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load bootstrap_tags %}
+{% block content %}
+<div class="panel panel-primary active-margin">
+    <div class="panel-heading"><strong>Let's Track</strong></div>
+    <form method="post" action="{% url 'login' %}?next={{ next }}" class="accountform">
+        <fieldset class="form-group">
+            <legend>Login</legend>
+            {% csrf_token %}
+            {{ user_form | as_bootstrap }}
+            
+             <p><a href="{% url 'password_reset' %}">Forgot my password</a></p>
+             
+            <button type="submit" class="btn btn-primary">Login</button>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
+
+<!-- Reference: 
+Author: CodeInstitute (2019).
+Title: "Putting It All Togther: Ecommerce".
+Version: Unknown.
+Type: HTML, CSS, Python, Jinja, sqlite3, postgres.
+Retrieved from: https://github.com/Code-Institute-Solutions/PuttingItAllTogether-Ecommerce/tree/master/03-HostingYourEcommerceWebApp/06-travis_continuous_integration
+-->

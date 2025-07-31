@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><strong>Issue Information</strong></div>
+    <!-- Table -->
+    <table class="table table-striped">
+        <tr>
+            <td><strong>Issue Name: </strong></td>
+            <td>{{ issue.issue_name }}</td>
+        </tr>
+        <tr class="info">
+            <td><strong>Description: </strong></td>
+            <td>{{ issue.issue_description }}</td>
+        </tr>
+        <tr>
+            {% if issue.issue_image %}
+                <td colspan="2"><img class="" src="{{ MEDIA_URL }}{{ issue.issue_image }}" alt="Issue Image" style="width:100%;height:400px;"></td>
+            {% else %}
+                <td colspan="2"><img class="" src="{% static 'images/No-image-available.jpg' %}" alt="Issue Image" style="width:100%;height:400px;"></td>                
+            {% endif %}
+            <!--
+            <td colspan="2"><img class="" src="{{ MEDIA_URL }}{{ issue.issue_image }}" alt="Issue Image" style="width:100%;height:400px;"></td>
+            -->
+        </tr>
+        <tr class="info">
+            <td><strong>Contributor: </strong></td>
+            <td>{{ issue.contributor }}</td>
+        </tr>
+        <tr>
+            <td><strong>Date Entered: </strong></td>
+            <td>{{ issue.date_issue_created }}</td>
+        </tr>
+        <tr class="info">
+            <td><strong>Type: </strong></td>
+            <td>{{ issue.issue_type }}</td>
+        </tr>
+        <tr>
+            <td><strong>Upvotes: </strong></td>
+            <td>{{ issue.issue_upvotes }}</td>
+        </tr>
+        <tr class="info">
+            <td><strong>Tag(s): </strong></td>
+            <td>{{ issue.tag }}</td>
+        </tr>
+        <tr>
+            <td><strong>Status: </strong></td>
+            <td>{{ issue.status }}</td>
+        </tr>
+        <tr class="info">
+            <td><strong>Last Update: </strong></td>
+            <td>{{ issue.date_issue_updated }}</td>
+        </tr>
+        <tr>
+            <td><strong>Issue Solved: </strong></td>
+            <td>{{ issue.is_issue_solved }}</td>
+        </tr>
+        <tr class="info">
+            <td><strong>Solved Date: </strong></td>
+            <td>{{ issue.date_issue_solved }}</td>
+        </tr>
+    </table>
+    <div class="well well-sm">
+        {% if issue.issue_type == "BUG" %}
+        <a class="btn btn-success" href="{% url 'upvote_issue' issue.id %}" role="button"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>  <strong>LIKE </strong></a> 
+        {% endif %} 
+        {% if user == issue.contributor %}
+        <a class="btn btn-success" href="{% url 'edit_issue' issue.id %}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>  Edit</a> 
+        {% endif %} 
+        {% if user == issue.contributor or user.is_staff %}
+        <a class="btn btn-success" href="{% url 'delete_issue' issue.id %}" role="button" onclick="return confirm('Are you sure you want to delete this issue?')">Delete</a> 
+        {% endif %}
+    </div>
+    {% if issue.issue_type == "FEATURE" %}
+    <br>
+    <div class="panel panel-primary">
+        <div class="panel-heading"><strong>Purchase Feature Upvote</strong></div>
+        <div class="panel-body">
+            <p>Purchase an upvote for the new feature you would like to see developed here.</p>
+            <p><strong>Price for Upvote:  €</strong>{{ issue.price }}</p>
+            <form method="post" action="{% url 'add_to_cart' issue.id %}">
+                {% csrf_token %}
+                <div class="input-group">
+                <input name="quantity" type="number" min="1" max="999" class="form-control" placeholder="Quantity">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="submit">Add to Cart</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    <br>
+    <div id="CommentSection" class="panel panel-primary active-margin">
+        <div class="panel-heading"><strong>Comments Section</strong></div>
+        <div class="panel-body">
+            {% if len_of_comments == 0 %}
+            <p>This issue has not been commented on yet.</p>
+            {% else %}
+                {% for comment in comments %}
+                <div class="well well-sm">
+                    <table class="table table-striped">
+                        <tr>
+                            <td><strong>Comment: </strong></td><td><p>{{ comment.comment }}</p></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contributor: </strong></td><td><p>{{ comment.contributor }}</p></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date Entered: </strong></td><td><p>{{ comment.date_comment_created }}</p></td>
+                        </tr>
+                        {% if comment.date_comment_updated %}
+                        <tr>
+                            <td><strong>Date Updated: </strong></td><td><p>{{ comment.date_comment_updated }}</p></td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                    {% if user == comment.contributor %}
+                    <a class="btn btn-success" href="{% url 'edit_comment' comment.id %}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>  Edit</a> 
+                    {% endif %}
+                    {% if user == comment.contributor or user.is_staff %}
+                    <a class="btn btn-success" href="{% url 'delete_comment' comment.id %}" role="button" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a> 
+                    {% endif %} 
+                </div>
+                {% endfor %}
+            {% endif %}
+        <a class="btn btn-success" href="{% url 'create_comment' issue.id %}" role="button">Comment</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

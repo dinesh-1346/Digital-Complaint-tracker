@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+
+{% block content %}
+<div class="panel panel-primary active-margin">
+        <div class="panel-heading"><strong>Your Shopping Cart</strong></div>
+        <div class="panel-body">
+            {% if cart_items %}
+                <h3>Number of items in cart: {{ cart_items|length }}</h3>
+                {% for item in cart_items %}
+                    <div class="well well-sm">
+                        <h3>{{ item.issue.issue_name }}</h3>
+                        <p>{{ item.issue.issue_description }}</p>
+                        <p>{{ item.issue.price }}</p>
+                        <p>
+                
+                            <form class="form-inline" method="post" action="{% url 'adjust_cart' item.id %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="exampleInputAmount" class="sr-only">New Qty</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Qty</div>
+                                        <input name="quantity" type="number" min="0" max="999" class="form-control">
+                                        <div class="input-group-addon">{{item.quantity}}</div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>  Amend Quantity</button>
+                            </form>
+                        </p>
+                    </div>
+                {% endfor %}
+                <div class="row">
+                    <h3>Total</h3>
+                    <p><span class="glyphicon glyphicon-euro" aria-hidden="true"></span>{{ total }}</p>
+                    <a href="{% url 'checkout' %}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>  Checkout</a>
+                </div>
+            {% else %}
+            <h4>You currently have no items in your cart.</h4>
+            {% endif %}
+        </div>
+</div>
+{% endblock %}
+
+<!-- Reference: 
+Author: CodeInstitute (2019).
+Title: "Putting It All Togther: Ecommerce".
+Version: Unknown.
+Type: HTML, CSS, Python, Jinja, sqlite3, postgres.
+Retrieved from: https://github.com/Code-Institute-Solutions/PuttingItAllTogether-Ecommerce/tree/master/03-HostingYourEcommerceWebApp/06-travis_continuous_integration
+-->

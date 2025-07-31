@@ -1,0 +1,107 @@
+{% extends 'base.html' %} {% block content %}
+<div class="panel panel-primary active-margin">
+    <div class="panel-heading"><strong>Progress Panel</strong></div>
+    <div class="container">
+        <div class="row" style="margin-top:10px;">
+            <div id="completed_weekly_container" class="col-sm-12 col-md-6"></div>
+            <div id="completed_monthly_container" class="col-sm-12 col-md-6"></div>
+        </div>
+        <div class="row">
+            <div id="bug_upvotes_container" class="col-sm-12 col-md-6" data-url="{% url 'get_bug_upvotes_json' %}"></div>
+            <div id="feature_upvotes_container" class="col-sm-12 col-md-6" data-url="{% url 'get_feature_upvotes_json' %}"></div>
+        </div>
+
+        <div id="issue_type_container" data-url="{% url 'get_issue_type_json' %}"></div>
+        <div id="status_container" data-url="{% url 'get_issue_status_json' %}"></div>
+    </div>
+</div>
+<script>
+$.ajax({
+    url: $("#issue_type_container").attr("data-url"),
+    dataType: 'json',
+    success: function(data) {
+        Highcharts.chart("issue_type_container", data);
+    }
+});
+$.ajax({
+    url: $("#status_container").attr("data-url"),
+    dataType: 'json',
+    success: function(data) {
+        Highcharts.chart("status_container", data);
+    }
+});
+$.ajax({
+    url: $("#bug_upvotes_container").attr("data-url"),
+    dataType: 'json',
+    success: function(data) {
+        Highcharts.chart("bug_upvotes_container", data);
+    }
+});
+$.ajax({
+    url: $("#feature_upvotes_container").attr("data-url"),
+    dataType: 'json',
+    success: function(data) {
+        Highcharts.chart("feature_upvotes_container", data);
+    }
+});
+$(document).ready(function() {
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'completed_weekly_container',
+            type: 'pie',
+            backgroundColor: 'transparent',
+        },
+        plotOptions: {
+            pie: {
+                innerSize: '70%'
+            }
+        },
+        title: {
+            text: 'Issues Resolved in the past week:',
+            style: { 'color': 'Black', 'margin-bottom': '30px' }
+        },
+        subtitle: {
+            text: '{{ issues_solved_this_week }}',
+            align: 'center',
+            verticalAlign: 'middle',
+            style: { "fontSize": "10em", 'color': 'DodgerBlue' },
+            y: 15
+        },
+        credits: { enabled: false },
+    });
+});
+$(document).ready(function() {
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'completed_monthly_container',
+            type: 'pie',
+            backgroundColor: 'transparent',
+        },
+        plotOptions: {
+            pie: {
+                innerSize: '70%'
+            }
+        },
+        title: {
+            text: 'Issues Resolved in the past month:',
+            style: { 'color': 'Black' }
+        },
+        subtitle: {
+            text: '{{ issues_solved_this_month }}',
+            align: 'center',
+            verticalAlign: 'middle',
+            style: { "fontSize": "10em", 'color': 'DodgerBlue' },
+            y: 15
+        },
+        credits: { enabled: false },
+    });
+});
+</script>
+{% endblock %}
+<!--
+Author: Daly, J. (2019).
+Title: "issue-tracker".
+Version: Unknown.
+Type: HTML, CSS, Python, Jinja, sqlite3, postgres.
+Retrieved from: https://github.com/jordandaly/issue_tracker
+-->

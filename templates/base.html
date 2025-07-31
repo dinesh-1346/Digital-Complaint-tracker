@@ -1,0 +1,109 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bug Fixer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> {% block head_js %} {% endblock head_js %}
+</head>
+
+<body>
+    <!-- Fixed masthead -->
+    <nav class="navbar navbar-masthead navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><i class="fa fa-bug"></i>  Bug & Issue Tracker</Bug></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Issues<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'create_issue' %}">Create Issue</a></li>
+                            <li><a href="{% url 'search' %}">Search Issues</a></li>
+                            <li><a href="{% url 'my_contributions' %}">My Contributions</a></li> 
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'about_page' %}">About</a></li>
+                    <li><a href="{% url 'progress_panel' %}">Progress Panel</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% if messages %}
+    <div class="alert alert-success">
+        <div class="messages">
+            {% for message in messages %} {{ message }} {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="container">
+        <div>
+            <ul class="nav nav-pills ul-spacing">
+                {% if user.is_authenticated %}
+                <li role="presentation" class=""><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a></li>
+                <li role="presentation" class=""><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-off" aria-hidden="true"></span>  Log Out</a></li>
+                <li class="">
+                    <a href="{% url 'view_cart' %}">
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><span>  Cart</span>
+                        {% if issue_upvote_count > 0 %}
+                            <label class="badge badge-primary">{{ issue_upvote_count }}</label>
+                        {% endif %}
+                    </a>
+                </li>
+                {% else %}
+                <li role="presentation" class=""><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Register</a></li>
+                <li role="presentation" class=""><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>  Log In</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+        {% block content %} {% endblock %}
+        
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/custom-script.js' %}"></script>
+    <!-- Footer -->
+    <footer class="container-fluid" style="padding-bottom:5px;">
+        <div class="row" style="bottom:0px;">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4" style="bottom:0;">
+                <ul class="list-inline social-links" style="padding-top:5px;padding-bottom:0px;bottom:0;">
+                    <li><a target="_blank" href="#"><i class="fa fa-github"></i></a></li>
+                    <li><a target="_blank" href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="{% url 'index' %}" data-toggle="tooltip" data-placement="top" title="Home Page"><i class="fa fa-bug"></i></a></li>
+                    <li><a target="_blank" href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a target="_blank" href="#"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </footer>
+    <!--
+    <footer class="container-fluid footer">
+
+
+        <div class="text-center">
+            <a class="footer-a" href="{% url 'index' %}"><h3>Bug & Issue Fixer</h3></a>
+        </div>
+
+    </footer>
+    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+    -->
+</body>
+
+</html>

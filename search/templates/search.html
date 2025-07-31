@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% load bootstrap_tags %} {% block content %}
+<div class="panel panel-primary active-margin">
+    <div class="panel-heading"><strong>Search Issues</strong></div>
+    <form action="" method="get">
+        {{ filter.form | as_bootstrap }}
+        <button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>  Search</button>
+    </form>
+    <br>
+    <div class="panel panel-primary">
+        <div class="panel-heading"><strong>Search Results</strong></div>
+        {% for issue in filter.qs %}
+        <div class="well well-sm">
+            <h4><strong>Issue Name: </strong>{{ issue.issue_name }}</h4>
+            <p><strong>Contributor: </strong>{{ issue.contributor }}</p>
+            <p><strong>Solved: </strong>{{ issue.is_issue_solved }}</p>
+            <p><strong>Staus: </strong>{{ issue.status }}</p>
+            <a class="btn btn-success" href="{% url 'view_issue' issue.id %}" role="button"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>  View</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

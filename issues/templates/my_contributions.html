@@ -1,0 +1,63 @@
+{% extends 'base.html' %} 
+{% load staticfiles %}
+{% block content %}
+<div class="panel panel-primary active-margin">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><strong>My Contributions</strong></div>
+        <div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#MyIssues" aria-controls="home" role="tab" data-toggle="tab">My Issues</a></li>
+            <li role="presentation"><a href="#MyComments" aria-controls="home" role="tab" data-toggle="tab">My Comments</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="MyIssues">
+                <div class="row">
+                {% for issue in my_issues %}
+                    <div class="col-sm-12 col-md-4">
+                        <div class="thumbnail">
+                            {% if issue.issue_image %}
+                                <img class="" src="{{ MEDIA_URL }}{{ issue.issue_image }}" alt="Issue Image" style="height:242px;width:200px;">
+                            {% else %}
+                                <img class="" src="{% static 'images/No-image-available.jpg' %}" alt="Issue Image" style="height:242px;width:200px;">                
+                            {% endif %}
+                            <div class="caption">
+                                <h4>{{ issue.issue_name }}</h4>
+                                <p><strong>Type: </strong>{{ issue.issue_type }}</p>
+                                <p><strong>Date Created: </strong>{{ issue.date_issue_created }}</p>
+                                <p><a href="{% url 'view_issue' issue.id %}" class="btn btn-success" role="button">View</a></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="MyComments">
+                <div class="row">
+                {% for comment in my_comments %}
+                    <div class="col-sm-12 col-md-4">
+                        <div class="thumbnail">
+                            {% if comment.issue.issue_image %}
+                                <img class="" src="{{ MEDIA_URL }}{{ comment.issue.issue_image }}" alt="Issue Image" style="height:242px;width:200px;">
+                            {% else %}
+                                <img class="" src="{% static 'images/No-image-available.jpg' %}" alt="Issue Image" style="height:242px;width:200px;">                
+                            {% endif %}
+                            <div class="caption">
+                                <h4>{{ comment.issue }}</h4>
+                                <p><strong>Date Created: </strong>{{ comment.date_comment_created }}</p>
+                                <p><a href="{% url 'view_issue' comment.issue.id %}#CommentSection" class="btn btn-success" role="button">View</a></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% for comment in my_comments %}
+                    <p>{{ comment.comment }}</p>
+                {% endfor %}

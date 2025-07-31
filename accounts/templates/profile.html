@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel panel-primary profile center-block">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Profile Information</div>
+  <!-- Table -->
+  <table class="table table-bordered">
+    <tr>
+      <td><strong>Username: </strong></td><td>{{ user.username }}</td>
+    </tr>
+    <tr class="info">
+      <td><strong>Email: </strong></td><td>{{ user.email }}</td>
+    </tr>
+    <tr>
+      <td><strong>Currently Active: </strong></td><td>{{ user.is_active }}</td>
+    </tr>
+    <tr class="info">
+      <td><strong>Last login: </strong></td><td>{{ user.last_login }}</td>
+    </tr>
+    <tr>
+      <td><strong>Date joined: </strong></td><td>{{ user.date_joined }}</td>
+    </tr>
+    <tr class="info">
+      <td><strong>Staff Member: </strong></td><td>{{ user.is_staff }}</td>
+    </tr>
+  </table>
+</div>
+{% endblock %}

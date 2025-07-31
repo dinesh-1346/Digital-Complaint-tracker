@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% load static from staticfiles %} {% load bootstrap_tags %} {% block head_js %}
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+    //<![CDATA[
+    Stripe.publishableKey = '{{ publishable }}';
+    //]]>
+</script>
+<script type="text/javascript" src="{% static 'js/stripe.js' %}"></script>
+{% endblock %} {% block content %}
+<div class="panel panel-primary active-margin">
+    <div class="panel-heading"><strong>Checkout</strong></div>
+    <div class="panel-body">
+        {% for item in cart_items %}
+        <div class="well well-sm">
+            <h3>{{ item.issue.issue_name }}</h3>
+            <p>{{ item.issue.issue_description }}</p>
+            <p><span class="glyphicon glyphicon-euro" aria-hidden="true"></span>  {{ item.issue.price }}</p>
+        </div>
+        {% endfor %}
+        <br>
+        <div class="well well-sm">
+            <h3>Total</h3>
+            <p><span class="glyphicon glyphicon-euro" aria-hidden="true"></span> {{ total }}</p>
+        </div>
+        <br>
+        <form role="form" method="post" id="payment-form" action="{% url 'checkout' %}">
+            <legend>Payment Details</legend>
+            <div id="credit-card-errors" style="display: none;">
+                <div id="alert-message block-message error" id="stripe-error-message"></div>
+            </div>
+            <div class="form-group col-md-6">
+                {{ order_form | as_bootstrap }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ payment_form | as_bootstrap }}
+            </div>
+            {% csrf_token %}
+            <div class="form-group col-md-12">
+            <input class=" btn btn-success" id="submit_payment_btn" name="commit" type="submit" value="Submit Payment">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+<!-- Reference: 
+Author: CodeInstitute (2019).
+Title: "Putting It All Togther: Ecommerce".
+Version: Unknown.
+Type: HTML, CSS, Python, Jinja, sqlite3, postgres.
+Retrieved from: https://github.com/Code-Institute-Solutions/PuttingItAllTogether-Ecommerce/tree/master/03-HostingYourEcommerceWebApp/06-travis_continuous_integration
+-->
